@@ -71,19 +71,31 @@
     <script>
       function showBinary() {
         fetch('binary.txt')
-          .then(response => response.text())
+          .then(response => {
+            if (!response.ok) {
+              throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.text();
+          })
           .then(data => {
             document.getElementById('binary-box').textContent = data;
             document.getElementById('binary-box').style.display = 'block';
             document.getElementById('copy-btn').style.display = 'block';
           })
-          .catch(error => console.error('Error loading binary data:', error));
+          .catch(error => {
+            console.error('Error loading binary data:', error);
+            document.getElementById('binary-box').textContent = `Error loading binary data: ${error.message}`;
+            document.getElementById('binary-box').style.display = 'block';
+          });
       }
 
       function copyBinary() {
         const binaryText = document.getElementById('binary-box');
         navigator.clipboard.writeText(binaryText.textContent).then(() => {
           alert('Binary code copied to clipboard!');
+        }).catch(err => {
+          console.error('Failed to copy: ', err);
+          alert('Failed to copy binary code');
         });
       }
     </script>
