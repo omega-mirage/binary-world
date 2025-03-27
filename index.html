@@ -35,10 +35,28 @@
         color: #0f0;
         cursor: pointer;
         transition: 0.3s;
+        margin-bottom: 20px;
       }
       button:hover {
         background: #0f0;
         color: #000;
+      }
+      #binary-box {
+        display: none;
+        width: 80%;
+        max-width: 600px;
+        height: 200px;
+        overflow-y: auto;
+        background: #111;
+        border: 2px solid #0f0;
+        padding: 10px;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        text-align: left;
+      }
+      #copy-btn {
+        display: none;
+        margin-top: 10px;
       }
     </style>
   </head>
@@ -47,6 +65,27 @@
       Binary code is like the ultimate diet—everything is either 1 or 0, but it
       still manages to make everything work perfectly!
     </h3>
-    <button onclick="window.open('binary.txt', '_blank')">View Binary</button>
+    <button onclick="showBinary()">View Binary</button>
+    <div id="binary-box"></div>
+    <button id="copy-btn" onclick="copyBinary()">Copy Binary</button>
+    <script>
+      function showBinary() {
+        fetch('binary.txt')
+          .then(response => response.text())
+          .then(data => {
+            document.getElementById('binary-box').textContent = data;
+            document.getElementById('binary-box').style.display = 'block';
+            document.getElementById('copy-btn').style.display = 'block';
+          })
+          .catch(error => console.error('Error loading binary data:', error));
+      }
+
+      function copyBinary() {
+        const binaryText = document.getElementById('binary-box');
+        navigator.clipboard.writeText(binaryText.textContent).then(() => {
+          alert('Binary code copied to clipboard!');
+        });
+      }
+    </script>
   </body>
 </html>
