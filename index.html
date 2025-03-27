@@ -65,39 +65,6 @@
       Binary code is like the ultimate diet—everything is either 1 or 0, but it
       still manages to make everything work perfectly!
     </h3>
-    <button onclick="showBinary()">View Binary</button>
-    <div id="binary-box"></div>
-    <button id="copy-btn" onclick="copyBinary()">Copy Binary</button>
-    <script>
-      function showBinary() {
-        fetch('binary.txt')
-          .then(response => {
-            if (!response.ok) {
-              throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.text();
-          })
-          .then(data => {
-            document.getElementById('binary-box').textContent = data;
-            document.getElementById('binary-box').style.display = 'block';
-            document.getElementById('copy-btn').style.display = 'block';
-          })
-          .catch(error => {
-            console.error('Error loading binary data:', error);
-            document.getElementById('binary-box').textContent = `Error loading binary data: ${error.message}`;
-            document.getElementById('binary-box').style.display = 'block';
-          });
-      }
-
-      function copyBinary() {
-        const binaryText = document.getElementById('binary-box');
-        navigator.clipboard.writeText(binaryText.textContent).then(() => {
-          alert('Binary code copied to clipboard!');
-        }).catch(err => {
-          console.error('Failed to copy: ', err);
-          alert('Failed to copy binary code');
-        });
-      }
-    </script>
+    
   </body>
 </html>
